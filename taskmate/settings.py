@@ -134,4 +134,4 @@ LOGIN_REDIRECT_URL = "todolist"
 LOGOUT_RIDIRECT_URL = 'login'
 LOGIN_URL = "login"
 
-django_heroku_settings(locals())
+django_heroku.settings(locals())
