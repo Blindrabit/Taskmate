@@ -4,31 +4,29 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
 from django.utils.safestring import mark_safe
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-
+from django.contrib.auth.models import User
 from .models import *
 from .utils import Calendar
 from .forms import EventForm
+from shiftDB.tasks import shift_book
 import calendar
 
 
 
 class CalendarView(generic.ListView):
-    #model = Event
-    #queryset = Event.objects.all()
-    queryset = Event.objects.filter(manage__username='adam'),
+    model = Event
     template_name = 'calendar.html'
 
-    
     def get_context_data(self, **kwargs):
+        shift_book()
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(self.request.user, withyear=True)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
+        
         return context
 
 
@@ -64,6 +62,7 @@ def event(request, event_id=None):
     
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
+        instance.manage = request.user
         form.save()
         return HttpResponseRedirect(reverse('calendar_app:calendar'))
     return render(request, 'event.html', {'form': form})

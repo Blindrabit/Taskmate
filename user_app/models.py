@@ -16,7 +16,7 @@ class Profile(models.Model):
     area = MultiSelectField(choices=nurse_type, default = 'Blank')
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username} Profile {self.user.id}'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

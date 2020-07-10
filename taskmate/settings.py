@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import django_heroku
 import os
 import environ
+import djcelery #celery
+djcelery.setup_loader()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,7 +46,11 @@ INSTALLED_APPS = [
     'todolist_app',
     'user_app.apps.UserAppConfig',
     'crispy_forms',  
-    'calendar_app'  
+    'calendar_app',
+    'shiftDB',
+    'background_task',
+    'django_cron',  
+    'djcelery',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +62,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CRON_CLASSES = [
+    "Shifts.cron.MyCronJob",
+]
+
 
 ROOT_URLCONF = 'taskmate.urls'
 
@@ -139,3 +150,9 @@ LOGOUT_RIDIRECT_URL = 'login'
 LOGIN_URL = "login"
 
 django_heroku.settings(locals())
+
+
+CELERY_BROKER_URL = 'redis://h:p9aafa913dcdfa9250f3b1e11842d6709124194df0d67c759634cb2caf9b96017@ec2-99-80-226-59.eu-west-1.compute.amazonaws.com:14949'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
