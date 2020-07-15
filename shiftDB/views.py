@@ -8,7 +8,7 @@ from .form import ShiftForm
 from .models import Shifts
 
 
-
+@login_required
 def shifts_view(request):
     shift_book()
     all_shifts = Shifts.objects.all()
@@ -18,7 +18,7 @@ def shifts_view(request):
     return render(request, 'shifts.html',{'all_shifts': all_shifts})
     
 
-
+@login_required
 def shifts_add_view(request):
     if request.method=='POST':
         shift_form = ShiftForm(request.POST)

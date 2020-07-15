@@ -8,12 +8,7 @@ from django.forms.models import model_to_dict
 from datetime import datetime, timedelta
 
 
-from celery import task
-
-
-@task()
 def shift_book():
-    print('it run')
     shifts_needing_fill = Shifts.objects.filter(start_time__gte=datetime.now()).filter(manage=None)
     for s in shifts_needing_fill:
         shift_dict = model_to_dict(s)

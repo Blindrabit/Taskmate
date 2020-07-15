@@ -11,6 +11,9 @@ from .forms import EventForm
 from shiftDB.tasks import shift_book
 import calendar
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+
 
 
 class CalendarView(generic.ListView):
@@ -53,16 +56,19 @@ def get_date(req_day):
     return datetime.today()
 
 
+@login_required
 def event(request, event_id=None):
     instance = Event()
     if event_id:
-        instance = get_object_or_404(Event, pk=event_id)
+        instance = get_object_or_404(Event, pk=event_id, manage_id=request.user.pk)
     else:
-        instance = Event()
+        instance = Event(manage_id=request.user.pk)
     
-    form = EventForm(request.POST or None, instance=instance)
-    if request.POST and form.is_valid():
-        instance.manage = request.user
-        form.save()
-        return HttpResponseRedirect(reverse('calendar_app:calendar'))
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('calendar_app:calendar')
+    else:
+        form = EventForm(instance=instance)
     return render(request, 'event.html', {'form': form})
