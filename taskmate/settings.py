@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'shiftDB',
     'background_task',
     'django_cron',  
-    'djcelery',
 ]
 
 MIDDLEWARE = [
