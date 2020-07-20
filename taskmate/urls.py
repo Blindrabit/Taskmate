@@ -6,19 +6,20 @@ from calendar_app import views as calendar_views
 from shiftDB import views as shiftDB_views
 from django.conf import settings
 from django.conf.urls.static import static
-#from shiftDB.tasks import shift_book
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('user_app.urls')),
     path('', todolist_views.index, name= 'index'),
     path('todolist/', include('todolist_app.urls')),
-    path('about/', todolist_views.about, name='about'),
-    path('contact/', todolist_views.contact, name='contact'),
     path('profile/', user_views.profile, name='profile'),
     path('', include('calendar_app.urls')),
     path('shifts/', shiftDB_views.shifts_view, name='shifts'),
     path('shifts_add/', shiftDB_views.shifts_add_view, name='shifts_add'),
+
+    path('about/', todolist_views.about, name='about'),
+    path('contact/', todolist_views.contact, name='contact'),
 ]
 
 if settings.DEBUG:

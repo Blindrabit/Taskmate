@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'calendar_app',
     'shiftDB',
     'background_task',
-    'django_cron',  
+    'django_cron', 
 ]
 
 MIDDLEWARE = [
