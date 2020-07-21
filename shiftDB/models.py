@@ -11,7 +11,7 @@ from django.db.models import F
 class Shifts(models.Model):
 
     class Meta:
-        ordering = ['-start_time']
+        ordering = ['start_time']
 
     nurse_type = (
         ('AE', 'A&E Nurse'),
