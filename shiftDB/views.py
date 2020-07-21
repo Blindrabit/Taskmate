@@ -6,12 +6,13 @@ from django.contrib.auth.decorators import login_required
 from .tasks import shift_book
 from .form import ShiftForm
 from .models import Shifts
+from datetime  import datetime
 
 
 @login_required
 def shifts_view(request):
     shift_book()
-    all_shifts = Shifts.objects.all()
+    all_shifts = Shifts.objects.filter(start_time__gte=datetime.now())
     paginator = Paginator(all_shifts, 7)
     page = request.GET.get('pg')
     all_shifts = paginator.get_page(page)

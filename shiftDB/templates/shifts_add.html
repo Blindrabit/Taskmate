@@ -6,7 +6,6 @@ Shifts Add
 {% endblock title %}
 
 {% block container %}
-
 <center><form method= "POST" class="mt-5 col-3">
     {% csrf_token %}
     {{ shift_form|crispy }}
