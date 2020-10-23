@@ -18,7 +18,15 @@ class Shifts(models.Model):
         ('DR', 'Doctor')
     )
 
+    
+    hospital_list = (
+        (1 , 'London - Atkinson Morley Hospital'),
+        (2 , 'London - Banstead Hospital'),
+        (3 , 'London - Barnes Hospital, London'),
+    )
+
     area = MultiSelectField(choices=nurse_type, default = 'Blank')
+    hospital = MultiSelectField(choices=hospital_list, default = 'Blank')
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     manage = models.ForeignKey(User, on_delete=models.CASCADE, default=None, blank=True, null=True)

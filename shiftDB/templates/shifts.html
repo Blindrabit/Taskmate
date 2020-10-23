@@ -26,9 +26,10 @@ shifts
             <thead class="thead-dark">
                 <tr class="row">
                     <th class="col-3">Area</th>
-                    <th class="col-3">Start Time</th>
-                    <th class="col-3">End Time</th>
-                    <th class="col-3">Manage</th>
+                    <th class="col-3">Hospital</th>
+                    <th class="col-2">Start Time</th>
+                    <th class="col-2">End Time</th>
+                    <th class="col-2">Manage</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,16 +38,18 @@ shifts
                     {% if shift.manage != None %}
                         <tr class="table-success row">
                             <td class="col-3">{{ shift.area }}</td>
-                            <td class="col-3">{{ shift.start_time }}</td>
-                            <td class="col-3">{{ shift.end_time }}</td>
-                            <td class="col-3">{{ shift.manage }}</td>
+                            <td class="col-3">{{ shift.hospital }}</td>
+                            <td class="col-2">{{ shift.start_time|date:'d-m-Y H:m' }}</td>
+                            <td class="col-2">{{ shift.end_time|date:'d-m-Y H:m' }}</td>
+                            <td class="col-2">{{ shift.manage }}</td>
                         </tr>
                     {% else %}
                         <tr class="row">
                             <td class="col-3">{{ shift.area }}</td>
-                            <td class="col-3">{{ shift.start_time }}</td>
-                            <td class="col-3">{{ shift.end_time }}</td>
-                            <td class="col-3">{{ shift.manage }}</td>                            
+                            <td class="col-3">{{ shift.hospital }}</td>
+                            <td class="col-2">{{ shift.start_time|date:'d-m-Y H:m' }}</td>
+                            <td class="col-2">{{ shift.end_time|date:'d-m-Y H:m' }}</td>
+                            <td class="col-2">{{ shift.manage }}</td>                           
                         </tr>
                     {% endif %}
                 {% endfor %}

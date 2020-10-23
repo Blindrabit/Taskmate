@@ -9,7 +9,7 @@ class ShiftForm(ModelForm):
       'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
       'end_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
     }
-    fields = ['area','start_time','end_time']
+    fields = ['area','hospital','start_time','end_time']
 
   def __init__(self, *args, **kwargs):
     super(ShiftForm, self).__init__(*args, **kwargs)
